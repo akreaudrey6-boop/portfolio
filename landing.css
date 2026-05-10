@@ -1,0 +1,366 @@
+/* STYLES DE BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background: #f8f9fa;
+    line-height: 1.6;
+    color: #333;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ===== ANIMATIONS GLOBALES ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+section {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* ===== BANNIÈRE HERO ===== */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+                url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Effet parallax léger */
+    color: white;
+    padding: 120px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    to {
+        left: 100%;
+    }
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    color: #ffd966;
+    margin-bottom: 30px;
+    animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.cta-button {
+    background: #e67e22;
+    color: white;
+    padding: 15px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: inline-block;
+    transition: all 0.3s ease;
+    animation: fadeInUp 1s ease-out 0.4s both;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+    z-index: -1;
+}
+
+.cta-button:hover {
+    background: #d35400;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(230,126,34,0.4);
+}
+
+.cta-button:hover::before {
+    left: 100%;
+}
+
+/* ===== SECTION TITRES ===== */
+section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #2c3e50;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: #e67e22;
+    animation: widthGrow 0.8s ease-out;
+}
+
+@keyframes widthGrow {
+    from { width: 0; }
+    to { width: 80px; }
+}
+
+.sous-titre {
+    text-align: center;
+    color: #7f8c8d;
+    font-size: 1.2rem;
+    margin-bottom: 50px;
+}
+
+/* ===== GRILLE DES PLATS ===== */
+.grillade {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+/* ANIMATION PRINCIPALE DES CARTES */
+.plat-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    cursor: pointer;
+}
+
+/* EFFET 1 : CARTE NOIRE AU SURVOL (CE QUE TU VOULAIS) */
+.plat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.plat-card:hover::before {
+    opacity: 1;
+}
+
+/* Le contenu apparaît au survol */
+.plat-card:hover h3,
+.plat-card:hover .plat-desc,
+.plat-card:hover .plat-prix {
+    color: white !important;
+    position: relative;
+    z-index: 2;
+    animation: textPop 0.3s ease-out;
+}
+
+@keyframes textPop {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* L'image devient plus sombre mais reste visible */
+.plat-card:hover .plat-image {
+    filter: brightness(0.3);
+}
+
+/* Animation supplémentaire : la carte se soulève */
+.plat-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.plat-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    transition: all 0.4s ease;
+}
+
+.plat-card h3 {
+    font-size: 1.4rem;
+    margin: 20px 20px 10px;
+    color: #2c3e50;
+    transition: color 0.3s;
+}
+
+.plat-desc {
+    color: #7f8c8d;
+    margin: 0 20px 15px;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+}
+
+.plat-prix {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e67e22;
+    margin: 0 20px 20px;
+    transition: color 0.3s;
+    position: relative;
+    display: inline-block;
+}
+
+/* Petit effet sur le prix */
+.plat-prix::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #e67e22;
+    transition: width 0.3s;
+}
+
+.plat-card:hover .plat-prix::after {
+    width: 100%;
+}
+
+/* ===== SECTION INFOS ===== */
+section:last-of-type {
+    background: #2c3e50;
+    color: white;
+    padding: 70px 0;
+    margin-top: 50px;
+}
+
+section:last-of-type h2 {
+    color: white;
+}
+
+section:last-of-type h2::after {
+    background: #f8d7a0;
+}
+
+.info-icon {
+    font-size: 2.5rem;
+    margin: 30px 0 15px;
+    text-align: center;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+section:last-of-type h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #f8d7a0;
+    text-align: center;
+}
+
+section:last-of-type p {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 1.1rem;
+    color: #ecf0f1;
+}
+
+.adresse {
+    font-style: italic;
+    color: #bdc3c7;
+    margin-top: 20px;
+}
+
+/* Animation au survol des infos */
+section:last-of-type p:hover {
+    color: #f8d7a0;
+    transform: scale(1.05);
+    transition: all 0.3s;
+}
+
+/* ===== FOOTER ===== */
+footer {
+    background: #1a2632;
+    color: #95a5a6;
+    text-align: center;
+    padding: 30px 0;
+    font-size: 0.9rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 800px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .grillade {
+        grid-template-columns: 1fr;
+    }
+    
+    .plat-card:hover {
+        transform: translateY(-5px) scale(1.01);
+    }
+    
+    .hero {
+        background-attachment: scroll;
+    }
+}
+
+/* Animation au chargement pour toutes les cartes */
+.plat-card {
+    animation: cardAppear 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+.plat-card:nth-child(1) { animation-delay: 0.1s; }
+.plat-card:nth-child(2) { animation-delay: 0.3s; }
+.plat-card:nth-child(3) { animation-delay: 0.5s; }
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
